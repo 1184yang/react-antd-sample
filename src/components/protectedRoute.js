@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import Auth from '../services/Auth';
 
 const protectedRoute = (Comp, route = '/profile') => (props) => {
   async function checkAuthState() {
     try {
-      //await Auth.currentAuthenticatedUser()
-      console.log('Auth');
-      throw new Error('Protected test..')
+      const user = await Auth.currentUserPoolUser();
+      if (!user) throw new Error('Protected test..')
     } catch (err) {
       props.history.push(route)
     }
